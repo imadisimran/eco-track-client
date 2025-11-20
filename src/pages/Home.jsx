@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import ActiveChallenges from '../components/ActiveChallenges';
 import RecentTips from '../components/RecentTips';
 import UpcomingEvents from '../components/UpcomingEvents';
+import GoGreen from '../components/GoGreen';
 
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
             <ActiveChallenges></ActiveChallenges>
             <RecentTips></RecentTips>
             <UpcomingEvents></UpcomingEvents>
+            <GoGreen></GoGreen>
         </>
     );
 };
