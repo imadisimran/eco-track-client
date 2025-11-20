@@ -17,7 +17,7 @@ const Login = () => {
                         </p>
                         <button className="form-btn btn-primary">Log in</button>
                     </form>
-                    <p className="sign-up-label">
+                    <p className="sign-up-label text-center">
                         Don't have an account?<span className="sign-up-link">Sign up</span>
                     </p>
                      <div className='divider'>Or</div>
