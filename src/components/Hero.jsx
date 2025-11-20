@@ -15,7 +15,7 @@ import hero2 from '../assets/hero2.png'
 
 const Hero = () => {
     return (
-        <div className="h-auto md:h-120 w-full">
+        <section className="h-auto md:h-120 w-full">
             <Swiper
                 style={{
                     '--swiper-navigation-color': '#00C853',
@@ -95,7 +95,7 @@ const Hero = () => {
 
                 </SwiperSlide>
             </Swiper>
-        </div>
+        </section>
     );
 };
 

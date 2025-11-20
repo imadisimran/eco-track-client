@@ -33,3 +33,7 @@
   transform: translateY(-2px); /* Subtle lift effect */
   box-shadow: 0 4px 12px rgba(0, 200, 83, 0.4); /* Green glow */
 }
+
+section:not(:first-child),footer{
+  @apply mt-10
+}
