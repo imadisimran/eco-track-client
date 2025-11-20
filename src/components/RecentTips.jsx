@@ -11,6 +11,7 @@ import { Autoplay, Navigation } from 'swiper/modules';
 const RecentTips = () => {
     return (
         <section className='w-11/12 mx-auto'>
+            <h1 className='section-heading'>Recent Tips From Our Community</h1>
             <StyledWrapper>
                 <div className="cards">
                     <Swiper
@@ -99,7 +100,6 @@ const StyledWrapper = styled.div`
     cursor: pointer;
     transition: 400ms;
   }
-
 
 
     .cards .card:hover {

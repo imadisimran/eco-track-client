@@ -13,6 +13,10 @@
   --color-base-200: #d2fce5
 }
 
+.section-heading{
+  @apply text-center text-5xl font-semibold mb-10
+}
+
 *{
   color:#1A237E
 }
@@ -35,5 +39,5 @@
 }
 
 section:not(:first-child),footer{
-  @apply mt-10
+  @apply mt-20
 }

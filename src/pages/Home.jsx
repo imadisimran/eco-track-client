@@ -2,6 +2,7 @@ import React from 'react';
 import Hero from '../components/Hero';
 import ActiveChallenges from '../components/ActiveChallenges';
 import RecentTips from '../components/RecentTips';
+import UpcomingEvents from '../components/UpcomingEvents';
 
 
 const Home = () => {
@@ -10,6 +11,7 @@ const Home = () => {
             <Hero></Hero>
             <ActiveChallenges></ActiveChallenges>
             <RecentTips></RecentTips>
+            <UpcomingEvents></UpcomingEvents>
         </>
     );
 };
