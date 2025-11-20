@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Challanges = () => {
+const Challenges = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const Challanges = () => {
     );
 };
 
-export default Challanges;
+export default Challenges;
