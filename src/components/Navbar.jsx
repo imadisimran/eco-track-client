@@ -32,8 +32,8 @@ const Navbar = () => {
   return (
     <div className="bg-base-100 shadow-sm">
       <div className="navbar justify-between w-11/12 mx-auto">
-        <div className="flex gap-5">
-          <div className="drawer">
+        <div className="flex">
+          <div className="drawer md:hidden">
             <input id="my-drawer-1" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
               {/* Page content here */}
