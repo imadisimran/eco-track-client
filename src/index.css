@@ -1,4 +1,41 @@
 @import "tailwindcss";
+
 @plugin "daisyui" {
   themes: light --default
+}
+
+.tippy-box[data-theme~='light'][data-placement^='bottom']>.tippy-arrow::before {
+  border-bottom-color: @apply bg-purple-300;
+}
+
+.tippy-box[data-theme~='light'] {
+  background-color: white;
+  color: white;
+  /* Text color */
+  font-weight: bold;
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #00C853;
+  --color-primary-content: #1A237E;
+  --color-base-100: #F5F7FA
+}
+
+.btn-primary {
+  background-color: #00C853; /* Electric Green */
+  color: #1A237E; /* Deep Navy Text for contrast */
+  font-weight: 700; /* Bold text makes it pop */
+  padding: 12px 24px;
+  border-radius: 8px; /* Slightly rounded, modern look */
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background-color: #00e660; /* Slightly lighter on hover */
+  transform: translateY(-2px); /* Subtle lift effect */
+  box-shadow: 0 4px 12px rgba(0, 200, 83, 0.4); /* Green glow */
 }
