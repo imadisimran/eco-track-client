@@ -5,11 +5,11 @@ const GoGreen = () => {
     return (
         <section className='w-11/12 mx-auto'>
             <h1 className='section-heading'>Go Green With Us</h1>
-            <div className='flex gap-20 items-center'>
+            <div className='flex flex-col md:flex-row gap-20 items-center'>
                 <div>
                     <img className='rounded-xl' src={tree} alt="" />
                 </div>
-                <ul className='list-disc text-base/loose'>
+                <ul className='list-disc text-base/loose pl-5'>
                     <li><b>Reduces your carbon footprint</b> and limits your impact on climate change.</li>
                     <li><b>Saves money</b> in the long run through lower utility bills (energy, water) and less consumption.</li>
                     <li><b>Promotes better health</b> by increasing consumption of whole, local foods and reducing exposure to pollutants.</li>
