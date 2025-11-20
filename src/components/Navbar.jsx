@@ -20,10 +20,10 @@ const Navbar = () => {
 
   const btns = (
     <>
-      <Link className="btn btn-primary" to="/auth/login">
+      <Link className="btn btn-primary" to="/login">
         Login
       </Link>
-      <Link className="btn btn-primary" to="/auth/register">
+      <Link className="btn btn-primary" to="/register">
         Register
       </Link>
       <LogOutBtn></LogOutBtn>
