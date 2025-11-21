@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router";
-import LogOutBtn from "./LogOutBtn";
 import logo from '../assets/logo.png'
 import { FiMenu } from "react-icons/fi";
 import useAuth from "../hooks/useAuth";

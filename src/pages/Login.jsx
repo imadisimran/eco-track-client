@@ -3,10 +3,13 @@ import styled from 'styled-components';
 import logo from '../assets/logo.png'
 import { Check, Eye, EyeOff } from 'lucide-react';
 import GoogleLogin from '../components/GoogleLogin';
+// import { useLocation, useNavigate } from 'react-router';
 
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  // const location=useLocation()
+  // const navigate = useNavigate()
   return (
     <div className='flex justify-center items-center h-screen'>
       <StyledWrapper>

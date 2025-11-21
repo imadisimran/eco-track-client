@@ -1,44 +1,52 @@
 import React, { useEffect, useState } from 'react';
 import AuthContext from './AuthContext';
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { auth, googleProvider } from '../firebase/firebase.config';
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
 
-    const [loading,setLoading]=useState(true)
-    const [user,setUser]=useState(null)
+    const [loading, setLoading] = useState(true)
+    const [user, setUser] = useState(null)
 
-    const googleSignIn=()=>{
-        return signInWithPopup(auth,googleProvider)
+    const googleSignIn = () => {
+        return signInWithPopup(auth, googleProvider)
     }
 
-    const logOut=()=>{
+    const logOut = () => {
         return signOut(auth)
     }
 
-    const singUp=(email,password)=>{
-        createUserWithEmailAndPassword(auth,email,password)
+    const signUp = (email, password) => {
+        return createUserWithEmailAndPassword(auth, email, password)
     }
 
-    const signIn=(email,password)=>{
-        signInWithEmailAndPassword(auth,email,password)
+    const signIn = (email, password) => {
+        return signInWithEmailAndPassword(auth, email, password)
     }
 
-    useEffect(()=>{
-        const unsubscribe=onAuthStateChanged(auth,currentUser=>{
+    const update = (name, photo) => {
+        return updateProfile(auth.currentUser, {
+            displayName: name,
+            photoURL: photo
+        })
+    }
+
+    useEffect(() => {
+        const unsubscribe = onAuthStateChanged(auth, currentUser => {
             setUser(currentUser)
             setLoading(false)
         })
-        return ()=>unsubscribe()
-    },[])
+        return () => unsubscribe()
+    }, [])
 
-    const authInfo={
+    const authInfo = {
         googleSignIn,
         logOut,
-        singUp,
+        signUp,
         signIn,
         user,
-        loading
+        loading,
+        update
 
     }
     return (

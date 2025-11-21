@@ -6,12 +6,14 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Navigation } from 'swiper/modules';
+import { Link } from 'react-router';
 
 
 const RecentTips = () => {
     return (
         <section className='w-11/12 mx-auto'>
             <h1 className='section-heading'>Recent Tips From Our Community</h1>
+            <div className='ml-auto w-fit'><Link to='/challenges' className='btn btn-primary '>View All</Link></div>
             <StyledWrapper>
                 <div className="cards">
                     <Swiper

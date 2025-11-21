@@ -2,13 +2,58 @@ import React, { useState } from 'react';
 import { Check, Eye, EyeOff } from 'lucide-react';
 import logo from '../assets/logo.png'
 import GoogleLogin from '../components/GoogleLogin';
+import useAuth from '../hooks/useAuth';
+import Swal from 'sweetalert2';
+import { Link, useLocation, useNavigate } from 'react-router';
 
 export default function Register() {
-    const [name, setName] = useState('');
-    const [photo, setPhoto] = useState('');
-    const [email, setEmail] = useState('');
+    // const [name, setName] = useState('');
+    // const [photo, setPhoto] = useState('');
+    // const [email, setEmail] = useState('');
+    const location=useLocation()
+    const navigate=useNavigate()
+    const { signUp, update } = useAuth()
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+
+    const handleSignUp = (e) => {
+        e.preventDefault()
+        const form = e.target
+        const name = form.name.value
+        const photo = form.photo.value
+        const email = form.email.value
+        console.log(name,photo,email)
+        signUp(email, password)
+            .then(result => {
+
+                update(name, photo)
+                    .then(() => {
+                        Swal.fire({
+                            icon: "success",
+                            title: `Welcome ${result.user.displayName}`,
+                            text: "Sign Up Successfully",
+                            timer: 2000,
+                        });
+                        navigate(location.state || '/')
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Something went wrong!",
+                        });
+                    })
+            })
+            .catch(err => {
+                console.log(err)
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
+            })
+    }
 
     // --- Validation Logic ---
     const requirements = [
@@ -225,27 +270,30 @@ export default function Register() {
 
                     <p className="title">Register To Eco Track</p>
 
-                    <form className="form" onSubmit={(e) => e.preventDefault()}>
+                    <form className="form" onSubmit={handleSignUp}>
                         <input
                             type="text"
                             className="input"
                             placeholder="Name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            name='name'
+                        // value={name}
+                        // onChange={(e) => setName(e.target.value)}
                         />
                         <input
                             type="url"
                             className="input"
                             placeholder="Photo URL"
-                            value={photo}
-                            onChange={(e) => setPhoto(e.target.value)}
+                            name='photo'
+                        // value={photo}
+                        // onChange={(e) => setPhoto(e.target.value)}
                         />
                         <input
                             type="email"
                             className="input"
                             placeholder="Email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            name='email'
+                        // value={email}
+                        // onChange={(e) => setEmail(e.target.value)}
                         />
 
                         {/* Password Field with Validation */}
@@ -296,7 +344,7 @@ export default function Register() {
                     </form>
 
                     <p className="sign-up-label">
-                        Already have an account?<span className="sign-up-link">Sign In</span>
+                        Already have an account?<Link state={location.state} to='/login' className="sign-up-link">Sign In</Link>
                     </p>
 
                     <div className="divider">Or</div>

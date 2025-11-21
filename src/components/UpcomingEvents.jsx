@@ -11,6 +11,7 @@ import { Autoplay, Pagination } from 'swiper/modules';
 const UpcomingEvents = () => {
     return (
         <section className='w-11/12 mx-auto'>
+            <h1 className='section-heading'>Upcoming Events</h1>
             <Swiper
                 autoplay={{
                     delay: 2500,
