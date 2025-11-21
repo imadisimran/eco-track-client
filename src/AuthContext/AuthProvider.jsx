@@ -5,6 +5,7 @@ import { auth, googleProvider } from '../firebase/firebase.config';
 
 const AuthProvider = ({children}) => {
 
+    const [loading,setLoading]=useState(true)
     const [user,setUser]=useState(null)
 
     const googleSignIn=()=>{
@@ -26,6 +27,7 @@ const AuthProvider = ({children}) => {
     useEffect(()=>{
         const unsubscribe=onAuthStateChanged(auth,currentUser=>{
             setUser(currentUser)
+            setLoading(false)
         })
         return ()=>unsubscribe()
     },[])
@@ -35,7 +37,8 @@ const AuthProvider = ({children}) => {
         logOut,
         singUp,
         signIn,
-        user
+        user,
+        loading
 
     }
     return (

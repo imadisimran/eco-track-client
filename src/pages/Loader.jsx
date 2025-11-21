@@ -3,14 +3,16 @@ import styled from 'styled-components';
 
 const Loader = () => {
   return (
-    <StyledWrapper>
-      <div className="loading-wave">
-        <div className="loading-bar" />
-        <div className="loading-bar" />
-        <div className="loading-bar" />
-        <div className="loading-bar" />
-      </div>
-    </StyledWrapper>
+    <div className='h-screen w-screen flex justify-center items-center bg-base-200'>
+      <StyledWrapper>
+        <div className="loading-wave">
+          <div className="loading-bar" />
+          <div className="loading-bar" />
+          <div className="loading-bar" />
+          <div className="loading-bar" />
+        </div>
+      </StyledWrapper>
+    </div>
   );
 }
 
