@@ -5,6 +5,7 @@ import GoogleLogin from '../components/GoogleLogin';
 import useAuth from '../hooks/useAuth';
 import Swal from 'sweetalert2';
 import { Link, useLocation, useNavigate } from 'react-router';
+import Loader from './Loader';
 
 export default function Register() {
     // const [name, setName] = useState('');
@@ -12,9 +13,10 @@ export default function Register() {
     // const [email, setEmail] = useState('');
     const location=useLocation()
     const navigate=useNavigate()
-    const { signUp, update } = useAuth()
+    const { signUp, update,loading,setLoading } = useAuth()
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    // console.log(location.state)
 
     const handleSignUp = (e) => {
         e.preventDefault()
@@ -43,6 +45,7 @@ export default function Register() {
                             title: "Oops...",
                             text: "Something went wrong!",
                         });
+                        setLoading(false)
                     })
             })
             .catch(err => {
@@ -52,6 +55,7 @@ export default function Register() {
                     title: "Oops...",
                     text: "Something went wrong!",
                 });
+                setLoading(false)
             })
     }
 
@@ -76,6 +80,10 @@ export default function Register() {
         if (progress <= 75) return '#2196f3'; // Blue
         return '#00C853'; // Green
     };
+
+    if(loading){
+        return <Loader></Loader>
+    }
 
     return (
         <div className="main-container">

@@ -1,29 +1,67 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import logo from '../assets/logo.png'
-import { Check, Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import GoogleLogin from '../components/GoogleLogin';
-// import { useLocation, useNavigate } from 'react-router';
+import { Link } from 'react-router';
+import useAuth from '../hooks/useAuth';
+import Swal from 'sweetalert2';
+import { useLocation, useNavigate } from 'react-router';
+import Loader from './Loader';
 
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
-  // const location=useLocation()
-  // const navigate = useNavigate()
+  const { signIn,loading,setLoading } = useAuth()
+  const location = useLocation()
+  // console.log(location.state)
+  const navigate = useNavigate()
+  const handleLogin = (e) => {
+    e.preventDefault()
+    const form = e.target
+    const email = form.email.value
+    const password = form.password.value
+    signIn(email, password)
+      .then(result => {
+        Swal.fire({
+          icon: "success",
+          title: `Welcome ${result.user.displayName}`,
+          text: "Login Successfully",
+          timer: 2000,
+        });
+        navigate(location.state || '/')
+      })
+      .catch(err => {
+        console.log(err)
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+        setLoading(false)
+      })
+
+  }
+
+  if(loading){
+    return <Loader></Loader>
+  }
+
   return (
     <div className='flex justify-center items-center h-screen'>
       <StyledWrapper>
         <div className="form-container">
           <img className='w-40 mx-auto' src={logo} alt="logo" />
           <p className="title">Login To Eco Track</p>
-          <form className="form">
-            <input type="email" className="input" placeholder="Email" />
+          <form onSubmit={handleLogin} className="form">
+            <input name='email' type="email" className="input" placeholder="Email" />
             {/* <input type="password" className="input" placeholder="Password" /> */}
             <div className="password-group">
               <input
                 type={showPassword ? "text" : "password"}
                 className="input"
                 placeholder="Password"
+                name='password'
               />
               <button
                 type="button"
@@ -39,13 +77,13 @@ const Login = () => {
             <button className="form-btn btn-primary">Log in</button>
           </form>
           <p className="sign-up-label text-center">
-            Don't have an account?<span className="sign-up-link">Sign up</span>
+            Don't have an account?<Link state={location.state} to='/register' className="sign-up-link">Sign up</Link>
           </p>
           <div className='divider'>Or</div>
           <div className="buttons-container">
             <GoogleLogin></GoogleLogin>
           </div>
-          
+
         </div>
       </StyledWrapper>
     </div>
