@@ -4,8 +4,29 @@ import LogOutBtn from "./LogOutBtn";
 import logo from '../assets/logo.png'
 import { FiMenu } from "react-icons/fi";
 import useAuth from "../hooks/useAuth";
+import userLogo from '../assets/user-logo.png'
+import Swal from "sweetalert2";
 const Navbar = () => {
-  const { user } = useAuth()
+  const { user,logOut } = useAuth()
+  // console.log(user)
+  const handleLogOut=()=>{
+          logOut()
+          .then(()=>{
+              Swal.fire({
+                      icon: "success",
+                      title: `Logged Out Successfully`,
+                      timer:2000,
+                  });
+          })
+          .catch(err=>{
+              console.log(err)
+              Swal.fire({
+                      icon: "error",
+                      title: "Oops...",
+                      text: "Something went wrong!",
+                  });
+          })
+      }
   const links = (
     <>
       <li>
@@ -24,7 +45,7 @@ const Navbar = () => {
   const btns = (
     <>
 
-      {user ? <LogOutBtn></LogOutBtn> :
+      {user ?  <button onClick={handleLogOut} className='btn btn-primary'>LogOut</button> :
         <><Link className="btn btn-primary" to="/login">
           Login
         </Link>
@@ -62,7 +83,7 @@ const Navbar = () => {
         </div>
         <div className="flex gap-5">
           <div className="space-x-5 hidden md:block">{btns}</div>
-          <div className="tooltip tooltip-bottom tooltip-primary" data-tip="Imad Imran">
+          {user && <div className="tooltip tooltip-bottom tooltip-primary" data-tip={user?.displayName}>
             <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}
@@ -71,8 +92,8 @@ const Navbar = () => {
               >
                 <div className="w-10 rounded-full">
                   <img
-                    alt="Tailwind CSS Navbar component"
-                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                    alt="Profile Picture"
+                    src={user?.photoURL || userLogo}
                   />
                 </div>
               </div>
@@ -88,12 +109,12 @@ const Navbar = () => {
                 <li>
                   <a>My Activities</a>
                 </li>
-                <li>
-                  <a>Logout</a>
-                </li>
+                {user && <li>
+                  <a onClick={handleLogOut}>Logout</a>
+                </li>}
               </ul>
             </div>
-          </div>
+          </div>}
         </div>
       </div>
     </div>
