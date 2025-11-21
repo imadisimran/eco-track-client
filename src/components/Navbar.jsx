@@ -3,7 +3,9 @@ import { Link } from "react-router";
 import LogOutBtn from "./LogOutBtn";
 import logo from '../assets/logo.png'
 import { FiMenu } from "react-icons/fi";
+import useAuth from "../hooks/useAuth";
 const Navbar = () => {
+  const { user } = useAuth()
   const links = (
     <>
       <li>
@@ -12,21 +14,25 @@ const Navbar = () => {
       <li>
         <Link to="/challenges">Challenges</Link>
       </li>
-      <li>
+      {user && <li>
         <Link to="/my-activities">My Activities</Link>
-      </li>
+      </li>}
+
     </>
   );
 
   const btns = (
     <>
-      <Link className="btn btn-primary" to="/login">
-        Login
-      </Link>
-      <Link className="btn btn-primary" to="/register">
-        Register
-      </Link>
-      <LogOutBtn></LogOutBtn>
+
+      {user ? <LogOutBtn></LogOutBtn> :
+        <><Link className="btn btn-primary" to="/login">
+          Login
+        </Link>
+          <Link className="btn btn-primary" to="/register">
+            Register
+          </Link></>}
+
+
     </>
   );
   return (
