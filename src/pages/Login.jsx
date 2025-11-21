@@ -246,3 +246,135 @@ const StyledWrapper = styled.div`
   `;
 
 export default Login;
+
+// Everything on tailwind
+
+// import React, { useState } from 'react';
+// import logo from '../assets/logo.png';
+// import { Eye, EyeOff } from 'lucide-react';
+// import GoogleLogin from '../components/GoogleLogin';
+// import { Link } from 'react-router';
+// import useAuth from '../hooks/useAuth';
+// import Swal from 'sweetalert2';
+// import { useLocation, useNavigate } from 'react-router';
+// import Loader from './Loader';
+
+// const Login = () => {
+//   const [showPassword, setShowPassword] = useState(false);
+//   const { signIn, loading, setLoading } = useAuth();
+//   const location = useLocation();
+//   const navigate = useNavigate();
+
+//   const handleLogin = (e) => {
+//     e.preventDefault();
+//     const form = e.target;
+//     const email = form.email.value;
+//     const password = form.password.value;
+
+//     signIn(email, password)
+//       .then((result) => {
+//         Swal.fire({
+//           icon: "success",
+//           title: `Welcome ${result.user.displayName}`,
+//           text: "Login Successfully",
+//           timer: 2000,
+//         });
+//         navigate(location.state || '/');
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         Swal.fire({
+//           icon: "error",
+//           title: "Oops...",
+//           text: "Something went wrong!",
+//         });
+//         setLoading(false);
+//       });
+//   };
+
+//   if (loading) {
+//     return <Loader />;
+//   }
+
+//   // Defining the font stack here to keep the JSX cleaner, 
+//   // but it is applied via Tailwind's arbitrary value syntax below.
+//   const fontStack = "font-['Lucida_Sans','Lucida_Sans_Regular','Lucida_Grande','Lucida_Sans_Unicode',Geneva,Verdana,sans-serif]";
+
+//   return (
+//     <div className='flex justify-center items-center h-screen bg-gray-50'>
+//       {/* Form Container */}
+//       <div className="w-[350px] min-h-[500px] bg-white shadow-[0px_5px_15px_rgba(0,0,0,0.35)] rounded-[10px] p-[20px_30px] box-border">
+        
+//         <img className='w-40 mx-auto' src={logo} alt="logo" />
+        
+//         {/* Title */}
+//         <p className={`${fontStack} text-center text-[28px] font-extrabold my-2.5 mb-[30px]`}>
+//           Login To Eco Track
+//         </p>
+
+//         <form onSubmit={handleLogin} className="w-full flex flex-col gap-[18px] mb-[15px]">
+//           <input 
+//             name='email' 
+//             type="email" 
+//             className="w-full rounded-[20px] border border-[#c0c0c0] outline-none px-[15px] py-3 text-sm" 
+//             placeholder="Email" 
+//           />
+          
+//           <div className="relative w-full">
+//             <input
+//               type={showPassword ? "text" : "password"}
+//               className="w-full rounded-[20px] border border-[#c0c0c0] outline-none px-[15px] py-3 text-sm"
+//               placeholder="Password"
+//               name='password'
+//             />
+//             <button
+//               type="button"
+//               className="absolute right-[15px] top-1/2 -translate-y-1/2 bg-none border-none cursor-pointer text-[#747474] flex items-center hover:text-black"
+//               onClick={() => setShowPassword(!showPassword)}
+//             >
+//               {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+//             </button>
+//           </div>
+
+//           <p className="text-right m-0">
+//             {/* Page Link Label */}
+//             <span className={`${fontStack} cursor-pointer text-[9px] font-bold text-[#747474] underline hover:text-black`}>
+//               Forgot Password?
+//             </span>
+//           </p>
+
+//           {/* Form Button */}
+//           <button className={`${fontStack} w-full py-2.5 px-[15px] rounded-[20px] border-none bg-[#00C853] text-white cursor-pointer shadow-[0px_3px_8px_rgba(0,0,0,0.24)] active:shadow-none hover:bg-[#00b34a] transition-colors`}>
+//             Log in
+//           </button>
+//         </form>
+
+//         {/* Sign Up Label */}
+//         <p className={`${fontStack} text-center text-[10px] text-[#747474] m-0`}>
+//           Don't have an account?
+//           {/* Sign Up Link */}
+//           <Link 
+//             state={location.state} 
+//             to='/register' 
+//             className={`${fontStack} ml-1 text-[11px] underline decoration-teal-600 text-teal-600 cursor-pointer font-extrabold`}
+//           >
+//             Sign up
+//           </Link>
+//         </p>
+
+//         <div className='text-center text-gray-400 text-xs my-4'>Or</div>
+
+//         {/* Note: Your original styled-components applied styles to .google-login-button.
+//            Since that component is imported, you might need to pass the font class 
+//            to it or wrap it in a div that applies the font.
+//         */}
+//         <div className={`flex flex-col justify-start gap-[15px] mt-5 w-full ${fontStack}`}>
+//           <GoogleLogin />
+//         </div>
+
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default Login;

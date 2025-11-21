@@ -7,6 +7,14 @@ import Swal from 'sweetalert2';
 import { Link, useLocation, useNavigate } from 'react-router';
 import Loader from './Loader';
 
+// --- Validation Logic ---
+const requirements = [
+    { id: 1, label: "At least 8 characters", test: (pwd) => pwd.length >= 8 },
+    { id: 2, label: "At least 1 number", test: (pwd) => /\d/.test(pwd) },
+    { id: 3, label: "At least 1 special char", test: (pwd) => /[@$!%*?&]/.test(pwd) },
+    { id: 4, label: "Uppercase & Lowercase", test: (pwd) => /[a-z]/.test(pwd) && /[A-Z]/.test(pwd) },
+];
+
 export default function Register() {
     // const [name, setName] = useState('');
     // const [photo, setPhoto] = useState('');
@@ -59,13 +67,7 @@ export default function Register() {
             })
     }
 
-    // --- Validation Logic ---
-    const requirements = [
-        { id: 1, label: "At least 8 characters", test: (pwd) => pwd.length >= 8 },
-        { id: 2, label: "At least 1 number", test: (pwd) => /\d/.test(pwd) },
-        { id: 3, label: "At least 1 special char", test: (pwd) => /[@$!%*?&]/.test(pwd) },
-        { id: 4, label: "Uppercase & Lowercase", test: (pwd) => /[a-z]/.test(pwd) && /[A-Z]/.test(pwd) },
-    ];
+    
 
     // Check if password meets all requirements
     const isPasswordValid = requirements.every((req) => req.test(password));
@@ -365,3 +367,217 @@ export default function Register() {
         </div>
     );
 }
+
+
+//Everything on tailwind
+
+
+
+// import React, { useState } from 'react';
+// import { Check, Eye, EyeOff } from 'lucide-react';
+// import logo from '../assets/logo.png';
+// import GoogleLogin from '../components/GoogleLogin';
+// import useAuth from '../hooks/useAuth';
+// import Swal from 'sweetalert2';
+// import { Link, useLocation, useNavigate } from 'react-router';
+// import Loader from './Loader';
+
+// export default function Register() {
+//     const location = useLocation();
+//     const navigate = useNavigate();
+//     const { signUp, update, loading, setLoading } = useAuth();
+//     const [password, setPassword] = useState('');
+//     const [showPassword, setShowPassword] = useState(false);
+
+//     const handleSignUp = (e) => {
+//         e.preventDefault();
+//         const form = e.target;
+//         const name = form.name.value;
+//         const photo = form.photo.value;
+//         const email = form.email.value;
+//         console.log(name, photo, email);
+//         signUp(email, password)
+//             .then(result => {
+//                 update(name, photo)
+//                     .then(() => {
+//                         Swal.fire({
+//                             icon: "success",
+//                             title: `Welcome ${result.user.displayName}`,
+//                             text: "Sign Up Successfully",
+//                             timer: 2000,
+//                         });
+//                         navigate(location.state || '/');
+//                     })
+//                     .catch((err) => {
+//                         console.log(err);
+//                         Swal.fire({
+//                             icon: "error",
+//                             title: "Oops...",
+//                             text: "Something went wrong!",
+//                         });
+//                         setLoading(false);
+//                     });
+//             })
+//             .catch(err => {
+//                 console.log(err);
+//                 Swal.fire({
+//                     icon: "error",
+//                     title: "Oops...",
+//                     text: "Something went wrong!",
+//                 });
+//                 setLoading(false);
+//             });
+//     };
+
+//     // --- Validation Logic ---
+//     const requirements = [
+//         { id: 1, label: "At least 8 characters", test: (pwd) => pwd.length >= 8 },
+//         { id: 2, label: "At least 1 number", test: (pwd) => /\d/.test(pwd) },
+//         { id: 3, label: "At least 1 special char", test: (pwd) => /[@$!%*?&]/.test(pwd) },
+//         { id: 4, label: "Uppercase & Lowercase", test: (pwd) => /[a-z]/.test(pwd) && /[A-Z]/.test(pwd) },
+//     ];
+
+//     // Check if password meets all requirements
+//     const isPasswordValid = requirements.every((req) => req.test(password));
+
+//     // Calculate Strength Progress
+//     const passedCount = requirements.filter((req) => req.test(password)).length;
+//     const progress = (passedCount / requirements.length) * 100;
+
+//     const getProgressColor = () => {
+//         if (progress <= 25) return '#ff4d4d'; // Red
+//         if (progress <= 50) return '#ffc107'; // Yellow
+//         if (progress <= 75) return '#2196f3'; // Blue
+//         return '#00C853'; // Green
+//     };
+
+//     if (loading) {
+//         return <Loader />;
+//     }
+
+//     const fontStack = "font-['Lucida_Sans','Lucida_Sans_Regular','Lucida_Grande','Lucida_Sans_Unicode',Geneva,Verdana,sans-serif]";
+
+//     return (
+//         <div className={`flex justify-center items-center min-h-screen bg-[#f3f4f6] ${fontStack}`}>
+//             {/* Minimal CSS for Animation Only */}
+//             <style>{`
+//                 @keyframes customFadeIn {
+//                     from { opacity: 0; transform: translateY(-5px); }
+//                     to { opacity: 1; transform: translateY(0); }
+//                 }
+//                 .animate-custom-fade {
+//                     animation: customFadeIn 0.3s ease-in-out;
+//                 }
+//             `}</style>
+
+//             <div className="w-full flex justify-center">
+//                 {/* Form Container */}
+//                 <div className="w-[350px] bg-white shadow-[0px_5px_15px_rgba(0,0,0,0.35)] rounded-[10px] p-[20px_30px] box-border">
+                    
+//                     <img className='w-40 mx-auto' src={logo} alt="logo" />
+
+//                     <p className="text-center m-[15px_0_20px_0] text-[24px] font-extrabold">
+//                         Register To Eco Track
+//                     </p>
+
+//                     <form className="w-full flex flex-col gap-[15px] mb-[15px]" onSubmit={handleSignUp}>
+//                         <input
+//                             type="text"
+//                             className="w-full rounded-[20px] border border-[#c0c0c0] outline-none p-[12px_15px] font-inherit text-sm"
+//                             placeholder="Name"
+//                             name='name'
+//                         />
+//                         <input
+//                             type="url"
+//                             className="w-full rounded-[20px] border border-[#c0c0c0] outline-none p-[12px_15px] font-inherit text-sm"
+//                             placeholder="Photo URL"
+//                             name='photo'
+//                         />
+//                         <input
+//                             type="email"
+//                             className="w-full rounded-[20px] border border-[#c0c0c0] outline-none p-[12px_15px] font-inherit text-sm"
+//                             placeholder="Email"
+//                             name='email'
+//                         />
+
+//                         {/* Password Field with Validation */}
+//                         <div className="relative w-full">
+//                             <input
+//                                 type={showPassword ? "text" : "password"}
+//                                 className="w-full rounded-[20px] border border-[#c0c0c0] outline-none p-[12px_15px] font-inherit text-sm"
+//                                 placeholder="Password"
+//                                 value={password}
+//                                 onChange={(e) => setPassword(e.target.value)}
+//                             />
+//                             <button
+//                                 type="button"
+//                                 className="absolute right-[15px] top-1/2 -translate-y-1/2 bg-none border-none cursor-pointer text-[#747474] flex items-center hover:text-black"
+//                                 onClick={() => setShowPassword(!showPassword)}
+//                             >
+//                                 {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+//                             </button>
+//                         </div>
+
+//                         {/* Live Validation UI - Only shows when typing */}
+//                         {/* Uses Tailwind for styling, but the custom class 'animate-custom-fade' for the keyframes */}
+//                         {password.length > 0 && (
+//                             <div className="mt-[-5px] bg-[#f8f9fa] rounded-[8px] p-[10px] border border-[#eee] animate-custom-fade">
+//                                 <div className="h-[4px] w-full bg-[#e0e0e0] rounded-[2px] mb-[8px] overflow-hidden">
+//                                     <div
+//                                         className="h-full transition-[width_0.3s_ease,background-color_0.3s_ease]"
+//                                         style={{
+//                                             width: `${progress}%`,
+//                                             backgroundColor: getProgressColor()
+//                                         }}
+//                                     />
+//                                 </div>
+//                                 <ul className="list-none p-0 m-0">
+//                                     {requirements.map((req) => (
+//                                         <li 
+//                                             key={req.id} 
+//                                             className={`flex items-center text-[10px] mb-[4px] transition-colors duration-200 ${
+//                                                 req.test(password) ? 'text-[#00C853] font-semibold' : 'text-[#747474]'
+//                                             }`}
+//                                         >
+//                                             {req.test(password) ? (
+//                                                 <Check size={10} className="mr-1" />
+//                                             ) : (
+//                                                 <div className="w-2.5 h-2.5 rounded-full bg-gray-300 mr-1"></div>
+//                                             )}
+//                                             {req.label}
+//                                         </li>
+//                                     ))}
+//                                 </ul>
+//                             </div>
+//                         )}
+
+//                         {/* Submit Button */}
+//                         <button 
+//                             className="p-[12px_15px] font-inherit rounded-[20px] border-none outline-none bg-[#00C853] text-white cursor-pointer shadow-[0px_3px_8px_rgba(0,0,0,0.24)] font-semibold transition-all duration-200 disabled:bg-[#ccc] disabled:cursor-not-allowed disabled:shadow-none active:shadow-none hover:bg-[#00b34a]"
+//                             disabled={!isPasswordValid}
+//                         >
+//                             Sign Up
+//                         </button>
+//                     </form>
+
+//                     <p className="m-0 text-[10px] text-[#747474] text-center">
+//                         Already have an account?
+//                         <Link 
+//                             state={location.state} 
+//                             to='/login' 
+//                             className="ml-[4px] text-[11px] underline decoration-teal-600 text-teal-600 cursor-pointer font-extrabold"
+//                         >
+//                             Sign In
+//                         </Link>
+//                     </p>
+
+//                     <div className="text-center text-[10px] text-[#747474] my-[10px]">Or</div>
+
+//                     <div className="w-full flex flex-col gap-[15px]">
+//                         <GoogleLogin />
+//                     </div>
+//                 </div>
+//             </div>
+//         </div>
+//     );
+// }
