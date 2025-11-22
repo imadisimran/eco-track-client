@@ -1,22 +1,25 @@
 import React from 'react';
 
-const ChallengeCard = () => {
+const ChallengeCard = ({challenge}) => {
+    const {imageUrl,title,description,category,endDate}=challenge
+    const now=new Date().getTime()
+    const end=new Date(endDate).getTime()
+    const isActive= now < end
     return (
         <div className="card bg-base-100 w-96 shadow-sm mr-5">
             <figure>
                 <img
-                    src="https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.webp"
+                    src={imageUrl}
                     alt="Shoes" />
             </figure>
             <div className="card-body">
                 <h2 className="card-title">
-                    Card Title
-                    <div className="badge badge-secondary">NEW</div>
+                    {title}
+                    <div className={`badge ${isActive?'badge-primary':'badge-error'}`}>{isActive ? 'Active':'Finished'}</div>
                 </h2>
-                <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+                <p>{description}</p>
                 <div className="card-actions justify-end">
-                    <div className="badge badge-outline">Fashion</div>
-                    <div className="badge badge-outline">Products</div>
+                    <div className="badge badge-outline">{category}</div>
                 </div>
             </div>
         </div>
