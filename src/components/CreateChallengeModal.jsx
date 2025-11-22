@@ -1,9 +1,14 @@
 import React, { useRef } from 'react';
 import { differenceInDays } from 'date-fns';
+import useAuth from '../hooks/useAuth';
+import useAxios from '../hooks/useAxios';
+import Swal from 'sweetalert2';
 
-const CreateChallengeModal = () => {
+const CreateChallengeModal = ({ setChallenges, challenges }) => {
 
   const formRef = useRef()
+  const { user } = useAuth()
+  const axiosInstance = useAxios()
 
 
   const handleSubmit = (e) => {
@@ -15,9 +20,9 @@ const CreateChallengeModal = () => {
     const target = e.target.target.value;
     const description = e.target.description.value;
     const imageUrl = e.target.imageUrl.value;
-    const start=new Date(startDate)
-    const end=new Date(endDate)
-    const duration = differenceInDays(end,start)
+    const start = new Date(startDate)
+    const end = new Date(endDate)
+    const duration = differenceInDays(end, start)
     const newChallenge = {
       title,
       category,
@@ -26,10 +31,33 @@ const CreateChallengeModal = () => {
       target,
       description,
       imageUrl,
-      duration
+      duration,
+      createdBy: user.email,
+      participants:0,
     };
     // console.log(form.startDate.value,form.endDate.value)
-    console.log(newChallenge)
+    // console.log(newChallenge)
+    axiosInstance.post('/challenges', newChallenge)
+      .then(data => {
+        if (data.data.insertedId) {
+          Swal.fire({
+            icon: "success",
+            title: `New Challenge Created Successfully`,
+            timer: 2000,
+          });
+          const newChallenges = [newChallenge, ...challenges]
+          setChallenges(newChallenges)
+        }
+      })
+      .catch(err => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Something went wrong!",
+        });
+        console.log(err)
+      })
+
     formRef.current.close();
   };
 
@@ -75,10 +103,11 @@ const CreateChallengeModal = () => {
                   defaultValue={'Select a category'}
                 >
                   <option disabled>Select a category</option>
-                  <option>Green Living</option>
-                  <option>Recycling</option>
-                  <option>Energy Saving</option>
+                  <option>Waste Reduction</option>
+                  <option>Energy Conservation</option>
                   <option>Water Conservation</option>
+                  <option>Sustainable Transport</option>
+                  <option>Green Living</option>
                 </select>
               </div>
             </div>
