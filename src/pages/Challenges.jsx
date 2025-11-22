@@ -1,12 +1,16 @@
 import React from 'react';
 import { useLoaderData } from 'react-router';
 import ChallengeCard from '../components/ChallengeCard';
+import CreateChallengeModal from '../components/CreateChallengeModal';
 
 const Challenges = () => {
     const challenges = useLoaderData()
     return (
-        <section className='w-11/12 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-20'>
-            {challenges.map(challenge => <ChallengeCard challenge={challenge} key={challenge?._id}></ChallengeCard>)}
+        <section className='w-11/12 mx-auto  mt-20'>
+            <CreateChallengeModal></CreateChallengeModal>
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5'>
+                {challenges.map(challenge => <ChallengeCard challenge={challenge} key={challenge?._id}></ChallengeCard>)}
+            </div>
         </section>
     );
 };
