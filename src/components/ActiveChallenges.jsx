@@ -25,7 +25,7 @@ const ActiveChallenges = () => {
             <h2 className='section-heading'>Join Our Active Challenges Today</h2>
             {loading ? <DataLoader></DataLoader> : <><div className='ml-auto w-fit'><Link to='/challenges' className='btn btn-primary '>View All</Link></div>
                 <Marquee pauseOnHover={true} className='py-5'>
-                    {recentChallenges.map(challenge => <ChallengeCard challenge={challenge}></ChallengeCard>)}
+                    {recentChallenges.map(challenge => <ChallengeCard key={challenge._id} challenge={challenge}></ChallengeCard>)}
                 </Marquee></>}
 
 

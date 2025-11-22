@@ -13,16 +13,16 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
-    children:[
-      {index:true,element:<Home></Home>},
-      {path:'my-activities',element:<PrivateRoute><MyActivities></MyActivities></PrivateRoute>},
-      {path:'challenges',element:<Challenges></Challenges>}
+    children: [
+      { index: true, element: <Home></Home> },
+      { path: 'my-activities', element: <PrivateRoute><MyActivities></MyActivities></PrivateRoute> },
+      { path: 'challenges', element: <Challenges></Challenges>, loader: () => fetch('http://localhost:3000/challenges') }
     ]
   },
-  {path:'/login',element:<Login></Login>},
-  {path:'/register',element:<Register></Register>},
-  {path:'/forgot-password', element:<ForgotPassword></ForgotPassword>},
-  {path:'/*',element:<Error></Error>}
+  { path: '/login', element: <Login></Login> },
+  { path: '/register', element: <Register></Register> },
+  { path: '/forgot-password', element: <ForgotPassword></ForgotPassword> },
+  { path: '/*', element: <Error></Error> }
 ]);
 
 export default router
