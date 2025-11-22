@@ -7,6 +7,7 @@ import MyActivities from "../pages/MyActivities";
 import PrivateRoute from "./PrivateRoute";
 import Challenges from "../pages/Challenges";
 import ForgotPassword from "../pages/ForgotPassword";
+import Error from "../pages/Error";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,8 @@ const router = createBrowserRouter([
   },
   {path:'/login',element:<Login></Login>},
   {path:'/register',element:<Register></Register>},
-  {path:'/forgot-password', element:<ForgotPassword></ForgotPassword>}
+  {path:'/forgot-password', element:<ForgotPassword></ForgotPassword>},
+  {path:'/*',element:<Error></Error>}
 ]);
 
 export default router

@@ -2,9 +2,9 @@ import React from 'react';
 
 const Challenges = () => {
     return (
-        <div>
+        <section>
             
-        </div>
+        </section>
     );
 };
 
