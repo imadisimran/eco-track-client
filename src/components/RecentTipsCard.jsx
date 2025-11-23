@@ -6,7 +6,7 @@ const RecentTipsCard = ({ post }) => {
     const date = new Date(post.createdAt);
     const postTime = format(date, 'PP p');
     return (
-        <div className="max-w-md w-full bg-base-200 text-primary-content rounded-lg shadow-lg overflow-hidden">
+        <div className="max-w-md w-full bg-base-200 text-primary-content rounded-lg shadow-lg overflow-hidden h-[350px] line-clamp-5 flex flex-col justify-between">
             <div className="flex items-center p-4">
                 <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center text-lg font-semibold">
                     {post.authorName.slice(0, 2).toUpperCase()}

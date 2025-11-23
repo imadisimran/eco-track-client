@@ -8,7 +8,7 @@ const ChallengeCard = ({ challenge }) => {
     const end = new Date(endDate).getTime()
     const isActive = now < end
     return (
-        <div onClick={()=>navigate(`/challenges/${_id}`)} className="card bg-base-100 w-96 shadow-sm mr-5 cursor-pointer">
+        <div onClick={()=>navigate(`/challenges/${_id}`)} className="card bg-base-100 w-96 shadow-sm mr-5 cursor-pointer h-[450px]">
             <figure>
                 <img
                     src={imageUrl}
@@ -19,7 +19,7 @@ const ChallengeCard = ({ challenge }) => {
                     {title}
                     <div className={`badge ${isActive ? 'badge-primary' : 'badge-error'}`}>{isActive ? 'Active' : 'Finished'}</div>
                 </h2>
-                <p>{description}</p>
+                <p className='line-clamp-3'>{description}</p>
                 <div className="card-actions justify-end">
                     <div className="badge badge-outline">{category}</div>
                 </div>
