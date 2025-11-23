@@ -1,18 +1,22 @@
+import { format } from 'date-fns';
 import React from 'react';
 import styled from 'styled-components';
 
-const EventCard = () => {
+const EventCard = ({ eventData }) => {
+  const date = new Date(eventData.date);
+  const time = format(date, 'PP p');
   return (
     <StyledWrapper>
       <div className="flip-card h-96">
         <div className="flip-card-inner">
           <div className="flip-card-front bg-base-200 text-primary-content border-primary-content border-2">
-            <p className="title">FLIP CARD</p>
-            <p>Hover Me</p>
+            <p className="title">{eventData.title}</p>
+            <p>{eventData.description}</p>
           </div>
           <div className="flip-card-back bg-base-100 text-primary-content border-primary-content border-2">
-            <p className="title">BACK</p>
-            <p>Leave Me</p>
+            <p className="title">Max Participant: {eventData.maxParticipants}</p>
+            <p className='tex-lg font-bold'>Current Participant: {eventData.currentParticipants}</p>
+            <p>At {time}</p>
           </div>
         </div>
       </div>
