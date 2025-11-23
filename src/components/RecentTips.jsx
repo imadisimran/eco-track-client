@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import RecentTipsCard from './RecentTipsCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -7,13 +7,24 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Link } from 'react-router';
-
+import useAxios from '../hooks/useAxios';
 
 const RecentTips = () => {
+    const [data,setData]=useState([])
+    const axiosInstance=useAxios()
+    useEffect(()=>{
+        axiosInstance.get('/recent-tips')
+        .then(data=>{
+            setData(data.data)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    },[axiosInstance])
     return (
         <section className='w-11/12 mx-auto'>
             <h1 className='section-heading'>Recent Tips From Our Community</h1>
-            <div className='ml-auto w-fit'><Link to='/challenges' className='btn btn-primary '>View All</Link></div>
+            <div className='ml-auto w-fit'><Link to='/challenges' className='btn btn-primary'>View All</Link></div>
             <StyledWrapper>
                 <div className="cards">
                     <Swiper
@@ -53,26 +64,11 @@ const RecentTips = () => {
                         }}
                         className="mySwiper"
                     >
-                        <SwiperSlide className='p-5'>
+                        {data.map(post=><SwiperSlide key={post._id} className='p-5'>
                             <div className="card">
-                                <RecentTipsCard></RecentTipsCard>
+                                <RecentTipsCard post={post}></RecentTipsCard>
                             </div>
-                        </SwiperSlide>
-                        <SwiperSlide className='p-5'>
-                            <div className="card">
-                                <RecentTipsCard></RecentTipsCard>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide className='p-5'>
-                            <div className="card">
-                                <RecentTipsCard></RecentTipsCard>
-                            </div>
-                        </SwiperSlide>
-                        <SwiperSlide className='p-5'>
-                            <div className="card">
-                                <RecentTipsCard></RecentTipsCard>
-                            </div>
-                        </SwiperSlide>
+                        </SwiperSlide>)}
                     </Swiper>
 
                 </div>
