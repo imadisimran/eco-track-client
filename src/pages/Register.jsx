@@ -44,6 +44,7 @@ export default function Register() {
                             text: "Sign Up Successfully",
                             timer: 2000,
                         });
+                        setLoading(false)
                         navigate(location.state || '/')
                     })
                     .catch((err) => {

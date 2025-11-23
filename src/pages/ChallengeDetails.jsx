@@ -1,8 +1,15 @@
-import React from 'react';
-import { useLoaderData } from 'react-router';
+import React, { useState } from 'react';
+import { Navigate, useLoaderData, useNavigate } from 'react-router';
+import useAuth from '../hooks/useAuth';
+import useAxios from '../hooks/useAxios';
+import UpdateFormModal from '../components/UpdateFormModal';
 
 const ChallengeDetails = () => {
-    const data = useLoaderData()
+    const challengeData = useLoaderData()
+    const [data,setData]=useState(challengeData)
+    const { user } = useAuth()
+    const axiosInstance = useAxios()
+    const navigate = useNavigate()
     // Destructure the data object inside the component
     const {
         _id,
@@ -27,6 +34,23 @@ const ChallengeDetails = () => {
             day: 'numeric',
         });
     };
+
+
+    const handleDelete = () => {
+        axiosInstance.delete(`/challenges/${_id}`)
+            .then(data => {
+                if (data.data.deletedCount) {
+                    navigate('/challenges')
+                }
+            })
+            .catch(err => {
+                console.log(err)
+            })
+    }
+
+    if (data.message) {
+        return <Navigate to='/error'></Navigate>
+    }
 
     return (
         <div className="max-w-3xl mx-auto mt-15 bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 font-sans">
@@ -103,8 +127,9 @@ const ChallengeDetails = () => {
                 <div className="mb-2 sm:mb-0">
                     Created by: <span className="font-medium text-gray-700">{createdBy}</span>
                 </div>
-                <div >
+                <div className='flex gap-5'>
                     <button className="btn btn-primary">Join</button>
+                    {user?.email === createdBy && <><UpdateFormModal data={data} setData={setData}></UpdateFormModal><button onClick={handleDelete} className="btn btn-error">Delete</button></> || user?.email === 'admin@ecotrack.com' && <><UpdateFormModal data={data} setData={setData}></UpdateFormModal><button onClick={handleDelete} className="btn btn-error">Delete</button></>}
                 </div>
             </div>
 
