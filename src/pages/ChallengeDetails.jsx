@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Navigate, useLoaderData, useNavigate } from 'react-router';
 import useAuth from '../hooks/useAuth';
 import useAxios from '../hooks/useAxios';
 import UpdateFormModal from '../components/UpdateFormModal';
+import Swal from 'sweetalert2';
 
 const ChallengeDetails = () => {
     const challengeData = useLoaderData()
-    const [data,setData]=useState(challengeData)
+    const [data, setData] = useState(challengeData)
+    const [isJoined, setIsJoined] = useState(false)
     const { user } = useAuth()
     const axiosInstance = useAxios()
     const navigate = useNavigate()
@@ -26,6 +28,15 @@ const ChallengeDetails = () => {
         imageUrl,
     } = data;
 
+    useEffect(()=>{
+        axiosInstance.post('/check-user-challenge',{email:user?.email,challengeId:_id})
+        .then(data=>{
+            if(data.data){
+                setIsJoined(true)
+            }
+        })
+    },[axiosInstance,_id,user])
+
     // Helper to format dates nicely
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleDateString('en-US', {
@@ -38,13 +49,59 @@ const ChallengeDetails = () => {
 
     const handleDelete = () => {
         axiosInstance.delete(`/challenges/${_id}`)
-            .then(data => {
-                if (data.data.deletedCount) {
+            .then(result => {
+                if (result.data.deletedCount) {
                     navigate('/challenges')
                 }
             })
             .catch(err => {
                 console.log(err)
+            })
+    }
+
+    const handleJoin = () => {
+        axiosInstance.patch(`/challenges/join/${_id}`)
+            .then(result => {
+                // {acknowledged: true, modifiedCount: 1, upsertedId: null, upsertedCount: 0, matchedCount: 1}
+                if (result.data.modifiedCount) {
+                    const newData = { ...data }
+                    newData.participants++
+                    setData(newData)
+                }
+                // console.log(data.data)
+            })
+            .catch(err => {
+                console.log(err)
+            })
+
+        const usersChallengeData = {
+            email: user.email,
+            challengeId: _id,
+            status: 'Ongoing',
+            progress: 0,
+            joinDate: new Date(),
+        }
+
+        axiosInstance.post('/add-user-challenge', usersChallengeData)
+            .then(result => {
+                if (result.data.insertedId) {
+                    Swal.fire({
+                        icon: "success",
+                        title: `New Challenge Created Successfully`,
+                        timer: 2000,
+                    });
+
+                    setIsJoined(true)
+                }
+
+            })
+            .catch(err => {
+                console.log(err)
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "Something went wrong!",
+                });
             })
     }
 
@@ -128,7 +185,7 @@ const ChallengeDetails = () => {
                     Created by: <span className="font-medium text-gray-700">{createdBy}</span>
                 </div>
                 <div className='flex gap-5'>
-                    <button className="btn btn-primary">Join</button>
+                    <button disabled={isJoined} className="btn btn-primary" onClick={handleJoin}>{isJoined ? 'Joined': 'Join'}</button>
                     {user?.email === createdBy && <><UpdateFormModal data={data} setData={setData}></UpdateFormModal><button onClick={handleDelete} className="btn btn-error">Delete</button></> || user?.email === 'admin@ecotrack.com' && <><UpdateFormModal data={data} setData={setData}></UpdateFormModal><button onClick={handleDelete} className="btn btn-error">Delete</button></>}
                 </div>
             </div>

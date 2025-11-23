@@ -50,7 +50,7 @@ const UpdateFormModal = ({ data,setData }) => {
       impactMetric
     };
 
-    console.log("Data to update:", updatedChallenge);
+    // console.log("Data to update:", updatedChallenge);
     
 
     axiosInstance.patch(`/challenges/${_id}`, updatedChallenge)
