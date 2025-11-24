@@ -20,7 +20,7 @@ const router = createBrowserRouter([
       { index: true, element: <Home></Home> },
       { path: 'my-activities', element: <PrivateRoute><MyActivities></MyActivities></PrivateRoute> },
       { path: 'challenges', element: <Challenges></Challenges>},
-      { path: 'challenges/:id', element: <PrivateRoute><ChallengeDetails></ChallengeDetails></PrivateRoute>, loader: ({ params }) => fetch(`https://eco-track-server-three.vercel.app/${params.id}`) }
+      { path: 'challenges/:id', element: <PrivateRoute><ChallengeDetails></ChallengeDetails></PrivateRoute>, loader: ({ params }) => fetch(`https://eco-track-server-three.vercel.app/challenges/${params.id}`) }
     ],
     errorElement:<ErrorComponent></ErrorComponent>,
     hydrateFallbackElement:<Loader></Loader>
