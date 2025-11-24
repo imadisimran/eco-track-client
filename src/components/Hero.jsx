@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 // Swiper React components
 import { Swiper, SwiperSlide } from 'swiper/react';
 
@@ -12,8 +12,23 @@ import { Autoplay, Pagination, Navigation } from 'swiper/modules';
 import { Link } from 'react-router';
 import hero1 from '../assets/hero1.png'
 import hero2 from '../assets/hero2.png'
+import useAxios from '../hooks/useAxios';
 
 const Hero = () => {
+
+    const axiosInstance=useAxios()
+    const [impactData,setImpactData]=useState([])
+
+    useEffect(()=>{
+        axiosInstance.get('/impacts')
+        .then(data=>{
+            setImpactData(data.data)
+        })
+        .catch(err=>{
+            console.log(err)
+        })
+    },[axiosInstance])
+
     return (
         <section className="h-auto md:h-120 w-full">
             <Swiper
@@ -47,39 +62,17 @@ const Hero = () => {
 
                         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-11/12 mx-auto items-center h-full  gap-5' >
                             {/* Dynamic Part */}
-                            <div className="card bg-base-200 card-md shadow-sm">
+                            {impactData.map(data=><div key={data._id} className="card bg-base-200 card-md shadow-sm">
                                 <div className="card-body">
                                     <h2 className="card-title">
-                                        20 Million Ton CO<sub>2</sub>Emission Reduced
+                                        {data.title}-<span className='text-2xl'>{data.value}</span>
                                     </h2>
-                                    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
+                                    <p>{data.description}</p>
                                     <div className="justify-end card-actions">
-                                        <button className="btn btn-primary">Join Us Today</button>
+                                        <Link to='/challenges' className="btn btn-primary">Join Us Today</Link>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="card bg-base-200 card-md shadow-sm">
-                                <div className="card-body">
-                                    <h2 className="card-title">
-                                        20 Million Ton CO<sub>2</sub>Emission Reduced
-                                    </h2>
-                                    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                                    <div className="justify-end card-actions">
-                                        <button className="btn btn-primary">Join Us Today</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="card bg-base-200 card-md shadow-sm">
-                                <div className="card-body">
-                                    <h2 className="card-title">
-                                        20 Million Ton CO<sub>2</sub>Emission Reduced
-                                    </h2>
-                                    <p>A card component has a figure, a body part, and inside body there are title and actions parts</p>
-                                    <div className="justify-end card-actions">
-                                        <button className="btn btn-primary">Join Us Today</button>
-                                    </div>
-                                </div>
-                            </div>
+                            </div>)}
 
                         </div>
 

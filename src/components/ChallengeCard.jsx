@@ -12,7 +12,7 @@ const ChallengeCard = ({ challenge }) => {
             <figure>
                 <img
                     src={imageUrl}
-                    alt="Shoes" />
+                    alt="Shoes" className='h-[250px] object-cover w-full' />
             </figure>
             <div className="card-body">
                 <h2 className="card-title">
