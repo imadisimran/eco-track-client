@@ -29,7 +29,14 @@ const Challenges = () => {
         }
     }
 
-    console.log(selected)
+    useEffect(()=>{
+        axiosInstance.get(`/challenges?categories=${selected.join(',')}`)
+        .then(result=>{
+            setChallenges(result.data)
+        })
+    },[axiosInstance, selected])
+
+    // console.log(selected)
 
     return (
         <section className='w-11/12 mx-auto  mt-20'>
@@ -39,7 +46,7 @@ const Challenges = () => {
                     <details className="dropdown">
                         <summary className="btn m-1">Categories</summary>
                         <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                            {categories.map(c=><li className={selected.includes(c._id) && 'bg-base-200'} onClick={()=>toogleCategory(c._id)} key={c._id}><a>{c._id}</a></li>)}
+                            {categories.map(c=><li className={selected.includes(c._id) ? 'bg-base-200':''} onClick={()=>toogleCategory(c._id)} key={c._id}><a>{c._id}</a></li>)}
                         </ul>
                     </details>
                 </div>
