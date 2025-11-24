@@ -17,7 +17,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <Home></Home> },
       { path: 'my-activities', element: <PrivateRoute><MyActivities></MyActivities></PrivateRoute> },
-      { path: 'challenges', element: <Challenges></Challenges>, loader: () => fetch('http://localhost:3000/challenges') },
+      { path: 'challenges', element: <Challenges></Challenges>},
       { path: 'challenges/:id', element: <PrivateRoute><ChallengeDetails></ChallengeDetails></PrivateRoute>, loader: ({ params }) => fetch(`http://localhost:3000/challenges/${params.id}`) }
     ]
   },
