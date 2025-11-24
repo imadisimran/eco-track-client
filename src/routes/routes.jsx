@@ -9,6 +9,8 @@ import Challenges from "../pages/Challenges";
 import ForgotPassword from "../pages/ForgotPassword";
 import Error from "../pages/Error";
 import ChallengeDetails from "../pages/ChallengeDetails";
+import ErrorComponent from "../components/ErrorComponent";
+import Loader from "../pages/Loader";
 
 const router = createBrowserRouter([
   {
@@ -18,8 +20,10 @@ const router = createBrowserRouter([
       { index: true, element: <Home></Home> },
       { path: 'my-activities', element: <PrivateRoute><MyActivities></MyActivities></PrivateRoute> },
       { path: 'challenges', element: <Challenges></Challenges>},
-      { path: 'challenges/:id', element: <PrivateRoute><ChallengeDetails></ChallengeDetails></PrivateRoute>, loader: ({ params }) => fetch(`http://localhost:3000/challenges/${params.id}`) }
-    ]
+      { path: 'challenges/:id', element: <PrivateRoute><ChallengeDetails></ChallengeDetails></PrivateRoute>, loader: ({ params }) => fetch(`https://eco-track-server-three.vercel.app/${params.id}`) }
+    ],
+    errorElement:<ErrorComponent></ErrorComponent>,
+    hydrateFallbackElement:<Loader></Loader>
   },
   { path: '/login', element: <Login></Login> },
   { path: '/register', element: <Register></Register> },

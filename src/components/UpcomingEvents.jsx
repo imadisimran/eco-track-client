@@ -6,26 +6,30 @@ import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination } from 'swiper/modules';
 import useAxios from '../hooks/useAxios';
+import DataLoader from './DataLoader';
 
 
 const UpcomingEvents = () => {
-    const axiosInstance=useAxios()
-    const [data,setData]=useState([])
+    const axiosInstance = useAxios()
+    const [data, setData] = useState([])
+    const [loading, setLoading] = useState(true)
 
-    useEffect(()=>{
+    useEffect(() => {
         axiosInstance('/events')
-        .then(data=>{
-            setData(data.data)
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-    },[axiosInstance])
+            .then(data => {
+                setData(data.data)
+                setLoading(false)
+            })
+            .catch(err => {
+                console.log(err)
+                setLoading(false)
+            })
+    }, [axiosInstance])
 
     return (
         <section className='w-11/12 mx-auto'>
             <h1 className='section-heading'>Upcoming Events</h1>
-            <Swiper
+            {loading ? <DataLoader message={'New Events On The Way'}></DataLoader> : <Swiper
                 autoplay={{
                     delay: 2500,
                     disableOnInteraction: false,
@@ -63,10 +67,11 @@ const UpcomingEvents = () => {
                 className="mySwiper"
             >
 
-                {data.map(eventData=><SwiperSlide key={eventData._id} className='py-5'>
+                {data.map(eventData => <SwiperSlide key={eventData._id} className='py-5'>
                     <EventCard eventData={eventData}></EventCard>
                 </SwiperSlide>)}
-            </Swiper>
+            </Swiper>}
+
 
         </section>
     );

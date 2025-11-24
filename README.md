@@ -1,16 +1,21 @@
-# React + Vite
+# EcoTrack — Sustainable Living Client
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 🌐 Live Demo
+[EcoTrack Live Site]https://eco-track-imad.netlify.app/
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Project Theme
+The client application for **EcoTrack** provides a community platform for users to engage with sustainability challenges, share eco-tips, and track their personal environmental impact.
 
-## React Compiler
+## 🚀 Key Client-Side Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+*   **Public and Protected Layouts:** Consistent and responsive design with separate layouts for marketing and user-dashboard pages.
+*   **Firebase Authentication:** Implements user login and registration with Firebase (Email/Password + Google), including client-side password validation.
+*   **Secure Routing:** Protects user-specific routes (`/my-activities`, `/challenges/add`), ensuring proper redirection to login when unauthenticated.
+*   **Dynamic Data Presentation:** Home page displays real-time data for Active Challenges, Recent Tips, and Upcoming Events fetched from the Express API.
+*   **Enhanced User Experience:** Implements global loading spinners, skeleton loaders for content, and styled toast notifications for all success and error feedback.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠 Tech Stack (Client)
+*   **Framework:** *React*
+*   **Auth:** Firebase Authentication
+*   **Hosting:** Netlify

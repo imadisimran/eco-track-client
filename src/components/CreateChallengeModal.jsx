@@ -34,7 +34,8 @@ const CreateChallengeModal = ({ setChallenges, challenges }) => {
       duration,
       createdBy: user.email,
       participants:0,
-      impactMetric:'Not Available Yet'
+      impactMetric:'Not Available Yet',
+      createdAt:new Date()
     };
     // console.log(form.startDate.value,form.endDate.value)
     // console.log(newChallenge)

@@ -8,24 +8,28 @@ import 'swiper/css/navigation';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { Link } from 'react-router';
 import useAxios from '../hooks/useAxios';
+import DataLoader from './DataLoader';
 
 const RecentTips = () => {
-    const [data,setData]=useState([])
-    const axiosInstance=useAxios()
-    useEffect(()=>{
+    const [data, setData] = useState([])
+    const axiosInstance = useAxios()
+    const [loading, setLoading] = useState(true)
+    useEffect(() => {
         axiosInstance.get('/recent-tips')
-        .then(data=>{
-            setData(data.data)
-        })
-        .catch(err=>{
-            console.log(err)
-        })
-    },[axiosInstance])
+            .then(data => {
+                setData(data.data)
+                setLoading(false)
+            })
+            .catch(err => {
+                console.log(err)
+                setLoading(false)
+            })
+    }, [axiosInstance])
+
     return (
         <section className='w-11/12 mx-auto'>
             <h1 className='section-heading'>Recent Tips From Our Community</h1>
-            {/* <div className='ml-auto w-fit'><Link to='/challenges' className='btn btn-primary'>View All</Link></div> */}
-            <StyledWrapper>
+            {loading ? <DataLoader message={'New Tips About To Come'}></DataLoader> : <StyledWrapper>
                 <div className="cards">
                     <Swiper
                         autoplay={{
@@ -37,7 +41,7 @@ const RecentTips = () => {
                             clickable: true,
                         }}
                         navigation={true}
-                        modules={[Autoplay,Navigation]}
+                        modules={[Autoplay, Navigation]}
 
                         spaceBetween={10}
                         // Default (Mobile / < 640px): 1 Slide
@@ -64,7 +68,7 @@ const RecentTips = () => {
                         }}
                         className="mySwiper"
                     >
-                        {data.map(post=><SwiperSlide key={post._id} className='p-5'>
+                        {data.map(post => <SwiperSlide key={post._id} className='p-5'>
                             <div className="card">
                                 <RecentTipsCard post={post}></RecentTipsCard>
                             </div>
@@ -72,7 +76,9 @@ const RecentTips = () => {
                     </Swiper>
 
                 </div>
-            </StyledWrapper>
+            </StyledWrapper>}
+            {/* <div className='ml-auto w-fit'><Link to='/challenges' className='btn btn-primary'>View All</Link></div> */}
+
 
         </section>
     );

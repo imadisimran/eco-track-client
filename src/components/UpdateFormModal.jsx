@@ -8,7 +8,7 @@ const UpdateFormModal = ({ data,setData }) => {
   const formRef = useRef();
   // const { user } = useAuth();
   const axiosInstance = useAxios();
-  console.log(data)
+  // console.log(data)
 
   // Destructure the data passed via props
   const {
@@ -47,7 +47,8 @@ const UpdateFormModal = ({ data,setData }) => {
       description,
       imageUrl,
       duration,
-      impactMetric
+      impactMetric,
+      updatedAt:new Date()
     };
 
     // console.log("Data to update:", updatedChallenge);
